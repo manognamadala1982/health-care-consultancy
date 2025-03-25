@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Directory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://goqii.com/blog/wp-content/uploads/Doctor-Consultation.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            color: #333;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        header {
+            background-color: rgba(76, 175, 80, 0.7);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        h1:hover {
+            color: #ff9800;
+            transform: scale(1.1);
+        }
+
+        h2 {
+            margin: 20px 0;
+        }
+
+        .homepage-section {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin-top: 30px;
+            border-radius: 10px;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .homepage-section h2 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .homepage-section p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .homepage-section a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .homepage-section a:hover {
+            background-color: #45a049;
+        }
+
+        .filter-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .doctor-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+
+        .doctor {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+            border: 2px solid black;
+            transition: transform 0.3s ease-in-out, width 0.3s ease, height 0.3s ease;
+        }
+
+        .doctor:hover {
+            transform: scale(1.05);
+        }
+
+        .doctor img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .doctor h3 {
+            margin-bottom: 10px;
+            color: #4CAF50;
+        }
+
+        .doctor p {
+            margin: 5px 0;
+        }
+
+        .appointment-form, .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            width: 50%;
+            border: 2px solid #ccc;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-form h2, .contact-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .appointment-form label, .contact-form label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .appointment-form input, .appointment-form select, .appointment-form textarea, 
+        .contact-form input, .contact-form select, .contact-form textarea,
+        .appointment-form button, .contact-form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .appointment-form button, .contact-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .appointment-form button:hover, .contact-form button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><strong>SpecialistSearch: Connecting You with the Experts</strong></h1>
+        <p>Your one-stop resource for finding doctors and their specialties.</p>
+    </header>
+
+    <!-- Homepage Section -->
+    <section class="homepage-section">
+        <h2>Welcome to SpecialistSearch</h2>
+        <p>Looking for the best doctor for your specific needs? SpecialistSearch makes it easier than ever to find the right healthcare professional for you. Whether you need a cardiologist, dentist, dermatologist, pediatrician, or orthopedic specialist, we have the information you need at your fingertips.</p>
+        <p>Start by filtering doctors based on your required specialization and book an appointment today.</p>
+        <a href="#specialization-filter">Find a Doctor</a>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <h2>Find a Doctor by Specialization</h2>
+        <select id="specialization-filter" onchange="filterDoctors()">
+            <option value="all">All Specializations</option>
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Dermatologist">Dermatologist</option>
+            <option value="Pediatrician">Pediatrician</option>
+            <option value="Orthopedic">Orthopedic</option>
+        </select>
+    </section>
+
+    <section class="doctor-list">
+        <div class="doctor" data-specialization="Cardiologist">
+            <img src="c:\Users\Admin\Downloads\aa331c6c-14e8-4140-bac5-93bd1070cee3.jpg" alt="Dr. M. Manogna">
+            <h3>Dr. M.Manogna</h3>
+            <p>Specialization: Cardiologist</p>
+            <p>Email: manognamadala@gmail.com</p>
+            <p>Phone: +1(910)452-7654</p>
+            <p>Location: 123 Health St, City</p>
+        </div>
+        <div class="doctor" data-specialization="Dentist">
+            <img src="c:\Users\Admin\Downloads\images (3).jpg" alt="Dr. D. Sreeansh">
+            <h3>Dr. D.Sreeansh</h3>
+            <p>Specialization: Dentist</p>
+            <p>Email: sreeanshsharma@gmail.com</p>
+            <p>Phone: 91+9876543210</p>
+            <p>Location: 456 Smile Ave, City</p>
+        </div>
+        <div class="doctor" data-specialization="Dermatologist">
+            <img src="c:\Users\Admin\Downloads\images (4).jpg" alt="Dr. Ch. Ravi">
+            <h3>Dr. Ch.Ravi</h3>
+            <p>Specialization: Dermatologist</p>
+            <p>Email: ravibhatia@gmail.com</p>
+            <p>Phone: 91+8328039476</p>
+            <p>Location: 789 Skin Rd, City</p>
+        </div>
+        <div class="doctor" data-specialization="Pediatrician">
+            <img src="c:\Users\Admin\Downloads\download (10).jpg" alt="Dr. D. Navya">
+            <h3>Dr. D.Navya</h3>
+            <p>Specialization: Pediatrician</p>
+            <p>Email: navyasri@gmail.com</p>
+            <p>Phone: 91+9988776655</p>
+            <p>Location: 101 Kids Lane, City</p>
+        </div>
+        <div class="doctor" data-specialization="Orthopedic">
+            <img src="c:\Users\Admin\Downloads\download (11).jpg" alt="Dr. S. Anirudh">
+            <h3>Dr. S.Anirudh</h3>
+            <p>Specialization: Orthopedic</p>
+            <p>Email: anirud5@gmail.com</p>
+            <p>Phone: 91+8991346723</p>
+            <p>Location: 102 Bone Ave, City</p>
+        </div>
+    </section>
+
+    <!-- Book Appointment Form Box -->
+    <section class="appointment-form">
+        <h2>Book an Appointment</h2>
+        <form action="book_appointment.php" method="POST">
+            <label for="doctor">Choose Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <option value="Dr. M.Manogna">Dr. M.Manogna - Cardiologist</option>
+                <option value="Dr. D.Sreeansh">Dr. D.Sreeansh - Dentist</option>
+                <option value="Dr. Ch.Ravi">Dr. Ch.Ravi - Dermatologist</option>
+                <option value="Dr. D.Navya">Dr. D.Navya - Pediatrician</option>
+                <option value="Dr. S.Anirudh">Dr. S.Anirudh - Orthopedic</option>
+            </select>
+
+            <label for="appointment-date">Preferred Appointment Date:</label>
+            <input type="date" id="appointment-date" name="appointment_date" required>
+
+            <label for="appointment-time">Preferred Appointment Time:</label>
+            <input type="time" id="appointment-time" name="appointment_time" required>
+
+            <label for="patient-name">Your Name:</label>
+            <input type="text" id="patient-name" name="patient_name" required>
+
+            <label for="patient-contact">Your Contact Info:</label>
+            <input type="text" id="patient-contact" name="patient_contact" required>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </section>
+
+    <!-- Contact Us Form Box -->
+    <section class="contact-form">
+        <h2>Contact Us</h2>
+        <form action="send_message.php" method="POST">
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Your Message:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SpecialistSearch</p>
+    </footer>
+
+    <script>
+        function filterDoctors() {
+            const filter = document.getElementById('specialization-filter').value;
+            const doctors = document.querySelectorAll('.doctor');
+            let backgroundImage;
+
+            doctors.forEach(function(doctor) {
+                if (filter === 'all' || doctor.getAttribute('data-specialization') === filter) {
+                    doctor.style.display = 'block';
+                } else {
+                    doctor.style.display = 'none';
+                }
+            });
+
+            switch (filter) {
+                case 'Cardiologist':
+                    backgroundImage = 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSmpTmTQeFWdjh84Iao2qAvKmJT4T4Pl3TXw&s")';
+                    break;
+                case 'Dentist':
+                    backgroundImage = 'url("https://www.mgadental.com.au/wp-content/uploads/2022/02/concept-dental-treatment-doctor-shows-tooth-his-hand-1.jpg")';
+                    break;
+                case 'Dermatologist':
+                    backgroundImage = 'url("https://plus.unsplash.com/premium_photo-1661769358914-1d33c22bd7ba?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGVybWF0b2xvZ3l8ZW58MHx8MHx8fDA%3D")';
+                    break;
+                case 'Pediatrician':
+                    backgroundImage = 'url("https://www.motherhoodindia.com/wp-content/uploads/2021/09/81506300_2708485325882829_8384136921864994816_o.jpg")';
+                    break;
+                case 'Orthopedic':
+                    backgroundImage = 'url("https://fordhospital.org/wp-content/uploads/2024/03/orthopedic.jpg")';
+                    break;
+                default:
+                    backgroundImage = 'url("https://goqii.com/blog/wp-content/uploads/Doctor-Consultation.jpg")';
+                    break;
+            }
+            document.body.style.backgroundImage = backgroundImage;
+        }
+    </script>
+</body>
+</html>
